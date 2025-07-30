@@ -35,7 +35,7 @@ class User extends Authenticatable
         'remember_token',
     ];
 
-    protected $cast = [
+    protected $casts = [
         'email_verified_at' => 'datetime',
         'dob' => 'date',
         'two_fa_enable' => 'boolean',
