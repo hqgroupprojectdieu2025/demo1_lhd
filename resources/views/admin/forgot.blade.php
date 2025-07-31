@@ -1,5 +1,5 @@
 <!-- resources/views/auth/forgot.blade.php -->
-@extends('admin.layout')
+@extends('layout.master')
 
 @section('title', 'Quên mật khẩu')
 
