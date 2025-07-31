@@ -12,31 +12,31 @@ use Illuminate\Queue\SerializesModels;
 class VerifyEmail extends Mailable
 {
     use Queueable, SerializesModels;
+    
     public $user;
     public $url;
-    public function __construct()
+    
+    public function __construct($user, $url)
     {
         $this->user = $user;
         $this->url = $url;
     }
 
-    /**
-     * Get the message envelope.
-     */
     public function envelope(): Envelope
     {
         return new Envelope(
-            subject: 'Verify Email',
+            subject: 'Xác nhận tài khoản',
         );
     }
 
-    /**
-     * Get the message content definition.
-     */
     public function content(): Content
     {
         return new Content(
-            view: 'view.name',
+            view: 'admin.verify-email',
+            with: [
+                'user' => $this->user,
+                'url' => $this->url,
+            ]
         );
     }
 
@@ -48,15 +48,5 @@ class VerifyEmail extends Mailable
     public function attachments(): array
     {
         return [];
-    }
-
-    public function build()
-    {
-        return $this->subject('Xác nhận tài khoản')
-                    ->view('emails.verify-email')
-                    ->with([
-                        'name' => $this->user->fullname,
-                        'url' => $this->url,
-                    ]);
     }
 }

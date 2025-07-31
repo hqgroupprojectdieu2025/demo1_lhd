@@ -21,6 +21,7 @@ class User extends Authenticatable
         'dob',
         'address',
         'email_verified_at',
+        'verification_token',
         'account_type',
         'two_fa_enable',
         'two_fa_secret',
@@ -56,6 +57,11 @@ class User extends Authenticatable
     public function targetedByActions()
     {
         return $this->hasMany(UserActionLogs::class, 'target_user_id');
+    }
+
+    public function emailSendLogs()
+    {
+        return $this->hasMany(EmailSendLog::class);
     }
 
 }

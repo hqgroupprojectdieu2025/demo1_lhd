@@ -6,33 +6,26 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class SignupRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
-    public function authorize(): bool
+    public function authorize()
     {
-        return false;
+        return true;
     }
 
-    /**
-     * Get the validation rules that apply to the request.
-     *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
-     */
-    public function rules(): array
+    public function rules()
     {
         return [
-            'fullname' => 'required|string|trim',
-            'email' => 'required|email|unique:users,email',
+            'fullname' => 'required|string|max:255',
+            'email' => 'required|email|unique:user,email',
             'password' => [
                 'required',
-                'string',
                 'min:8',
-                'regex:/[a-z]/',      // chữ thường
-                'regex:/[A-Z]/',      // chữ hoa
-                'regex:/[0-9]/',      // số
-                'regex:/[@$!%*#?&]/', // ký tự đặc biệt
+                'regex:/[A-Z]/',       // Ít nhất 1 chữ in hoa
+                'regex:/[a-z]/',       // Ít nhất 1 chữ thường
+                'regex:/[0-9]/',       // Ít nhất 1 số
+                'regex:/[@$!%*?&]/'    // Ít nhất 1 ký tự đặc biệt
             ],
+            'password_confirmation' => 'required|same:password',
+            'agree' => 'required|accepted',
         ];
     }
 
@@ -40,12 +33,18 @@ class SignupRequest extends FormRequest
     {
         return [
             'fullname.required' => 'Họ và tên là trường bắt buộc.',
+            'fullname.string' => 'Họ và tên phải là chuỗi ký tự.',
+            'fullname.max' => 'Họ và tên không được vượt quá 255 ký tự.',
             'email.required' => 'Email là trường bắt buộc.',
             'email.email' => 'Email có định dạng hợp lệ là abc@example.com.',
-            'email.unique' => 'Đã trùng thông tin email, vui lòng nhập lại.',
+            'email.unique' => 'Email đã được đăng ký. Vui lòng đăng nhập hoặc dùng email khác.',
             'password.required' => 'Mật khẩu là trường bắt buộc.',
-            'password.min' => 'Mật khẩu tối thiểu 8 ký tự.',
+            'password.min' => 'Mật khẩu phải chứa ít nhất 8 ký tự.',
             'password.regex' => 'Mật khẩu phải bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt.',
+            'password_confirmation.required' => 'Xác nhận mật khẩu là trường bắt buộc.',
+            'password_confirmation.same' => 'Xác nhận mật khẩu không khớp.',
+            'agree.required' => 'Bạn phải đồng ý với điều khoản và điều kiện.',
+            'agree.accepted' => 'Bạn phải đồng ý với điều khoản và điều kiện.',
         ];
     }
 }
