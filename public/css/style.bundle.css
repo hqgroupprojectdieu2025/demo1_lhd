@@ -47883,7 +47883,7 @@ code {
     .label.label-inline.label-md {
       padding: 0.8rem 0.6rem; }
     .label.label-inline.label-lg {
-      padding: 0.9rem 0.75rem; }
+      padding: 0.5rem 0.5rem; }
     .label.label-inline.label-xl {
       padding: 1rem 0.85rem; }
   .label.label-pill {
@@ -47922,7 +47922,8 @@ code {
     width: 24px;
     font-size: 0.9rem; }
     .label.label-lg.label-inline {
-      width: auto; }
+      width: auto;
+      height: auto; }
     .label.label-lg.label-dot {
       line-height: 8px;
       min-height: 8px;

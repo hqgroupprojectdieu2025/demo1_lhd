@@ -12,6 +12,7 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\URL;
 use Illuminate\Http\Request;
 use App\Mail\VerifyEmail;
+use Illuminate\Support\Facades\Auth;
 
 class SignupController extends Controller
 {
@@ -86,8 +87,10 @@ class SignupController extends Controller
     public function resendVerificationEmail(Request $request)
     {
         try {
-            $user = User::findOrFail($request->user_id);
-            
+            // $user = User::findOrFail($request->user_id);
+            // $user = Auth::user();
+            $user = $request->has('user_id') ? User::findOrFail($request->user_id) : Auth::user();
+
             if (!EmailSendLog::canSendEmail($user->email, 'verification', 10)) {
                 $remainingTime = $this->getTimeUntilNextDay();
                 return response()->json([
@@ -120,7 +123,12 @@ class SignupController extends Controller
             );
 
             Mail::to($user->email)->send(new VerifyEmail($user, $url));
-            
+            return back()->with('email_sent', true);
+            session([
+                'user_id' => $user->id,
+                'email' => $user->email,
+                'needs_verification' => true
+            ]);
             // Lưu log gửi email
             EmailSendLog::create([
                 'user_id' => $user->id,
@@ -183,7 +191,7 @@ class SignupController extends Controller
         $user = User::findOrFail($id);
 
         if ($user->email_verified_at) {
-            return redirect()->route('register.form')->with('info', 'Tài khoản đã được xác minh.');
+            return redirect()->route('login.form')->with('info', 'Tài khoản đã được xác minh.');
         }
 
         if ($user->verification_token !== $hash) {
@@ -194,7 +202,7 @@ class SignupController extends Controller
         $user->verification_token = null;
         $user->save();
 
-        return redirect()->route('register.form')
+        return redirect()->route('login.form')
             ->with('success', 'Tài khoản đã được xác minh thành công! Bạn có thể đăng nhập ngay bây giờ.')
             ->with('user_id', $user->id)
             ->with('email', $user->email)
