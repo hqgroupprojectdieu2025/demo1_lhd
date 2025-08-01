@@ -113,7 +113,7 @@
                                         <span class="font-weight-bolder">
                                             @if(Auth::user()->email_verified_at)
                                                 <span class="label label-lg label-success label-inline">Đã xác thực</span>
-                                            @else
+                                            <!-- @else
                                                 <div class="d-flex align-items-center">
                                                     <div class="text-center">
                                                         {{-- Đếm ngược nếu đã gửi email --}}
@@ -137,7 +137,7 @@
                                                         @endif
                                                     </div>
                                                 </div>
-                                            @endif
+                                            @endif -->
                                         </span>
                                     </div>
 
