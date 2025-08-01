@@ -47,7 +47,6 @@ jobs:
             # Cài lại composer bằng PHP 8.3
             php8.3 /usr/local/bin/composer install --no-dev --optimize-autoloader
 
-            # Laravel cache
             php8.3 artisan config:cache
             php8.3 artisan route:cache
 
