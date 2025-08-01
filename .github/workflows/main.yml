@@ -44,9 +44,10 @@ jobs:
 
             cd /home/dieupro2iYZ/dieu-project.tichhop.pro/public_html
 
-            # Cài lại composer bằng PHP 8.3
-            php8.3 /usr/local/bin/composer install --no-dev --optimize-autoloader
+            # Tự động build lại composer.lock bằng PHP 8.3 (cho phép chạy dưới root)
+            COMPOSER_ALLOW_SUPERUSER=1 php8.3 /usr/local/bin/composer update --no-dev --optimize-autoloader
 
+            # Laravel cache
             php8.3 artisan config:cache
             php8.3 artisan route:cache
 
