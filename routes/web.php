@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\SignupController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\ChangePasswordController;
+use App\Http\Controllers\Auth\TwoFAController;
 use Illuminate\Support\Facades\Auth;
 
 // Public routes
@@ -37,10 +39,14 @@ Route::middleware(['auth'])->group(function () {
     })->name('dashboard');
     
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+    // routes/web.php
+    Route::get('/changePassword', [ChangePasswordController::class, 'showChangeForm'])->name('password.change.form');
+    Route::post('/changePassword', [ChangePasswordController::class, 'changePassword'])->name('password.change');
+
     
     // 2FA Setup routes (cần đăng nhập)
-    Route::get('/2fa/setup', [App\Http\Controllers\Auth\TwoFAController::class, 'showSetupForm'])->name('2fa.setup');
-    Route::post('/2fa/enable', [App\Http\Controllers\Auth\TwoFAController::class, 'enable2FA'])->name('2fa.enable');
-    Route::post('/2fa/disable', [App\Http\Controllers\Auth\TwoFAController::class, 'disable2FA'])->name('2fa.disable');
-    Route::get('/2fa/regenerate', [App\Http\Controllers\Auth\TwoFAController::class, 'regenerateSecret'])->name('2fa.regenerate');
+    Route::get('/2fa/setup', [TwoFAController::class, 'showSetupForm'])->name('2fa.setup');
+    Route::post('/2fa/enable', [TwoFAController::class, 'enable2FA'])->name('2fa.enable');
+    Route::post('/2fa/disable', [TwoFAController::class, 'disable2FA'])->name('2fa.disable');
+    Route::get('/2fa/regenerate', [TwoFAController::class, 'regenerateSecret'])->name('2fa.regenerate');
 });
