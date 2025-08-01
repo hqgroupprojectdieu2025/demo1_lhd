@@ -123,7 +123,6 @@ class SignupController extends Controller
             );
 
             Mail::to($user->email)->send(new VerifyEmail($user, $url));
-            return back()->with('email_sent', true);
             session([
                 'user_id' => $user->id,
                 'email' => $user->email,
@@ -142,6 +141,7 @@ class SignupController extends Controller
             
             // Cập nhật thời gian gửi email
             session(['email_sent_at_' . $user->id => $currentTime]);
+            return back()->with('email_sent', true);
 
             $remainingSends = EmailSendLog::getRemainingSends($user->email, 'verification', 10);
 

@@ -111,9 +111,13 @@
                                     <div class="d-flex justify-content-between py-3 border-bottom">
                                         <span class="text-muted font-weight-bold">Trạng thái email:</span>
                                         <span class="font-weight-bolder">
-                                            @if(Auth::user()->email_verified_at)
+                                            @php
+                                                $freshUser = \App\Models\User::find(Auth::id());
+                                            @endphp
+
+                                            @if($freshUser->email_verified_at)
                                                 <span class="label label-lg label-success label-inline">Đã xác thực</span>
-                                            <!-- @else
+                                            @else
                                                 <div class="d-flex align-items-center">
                                                     <div class="text-center">
                                                         {{-- Đếm ngược nếu đã gửi email --}}
@@ -137,7 +141,7 @@
                                                         @endif
                                                     </div>
                                                 </div>
-                                            @endif -->
+                                            @endif
                                         </span>
                                     </div>
 
@@ -153,6 +157,14 @@
                     
                     <!--begin::Action Buttons-->
                     <div class="d-flex flex-wrap justify-content-center">
+                        <form action="{{ route('password.change') }}" method="POST" class="mr-3 mb-3">
+                            @csrf
+                            <button type="submit" class="btn btn-danger btn-lg font-weight-bolder px-8 py-4">
+                                <i class="fas fa-sign-out-alt mr-2"></i>
+                                Đổi mật khẩu
+                            </button>
+                        </form>
+
                         <form action="{{ route('logout') }}" method="POST" class="mr-3 mb-3">
                             @csrf
                             <button type="submit" class="btn btn-danger btn-lg font-weight-bolder px-8 py-4">
