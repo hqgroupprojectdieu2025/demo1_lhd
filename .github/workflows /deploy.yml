@@ -44,13 +44,11 @@ jobs:
 
             cd /home/dieupro2iYZ/dieu-project.tichhop.pro/public_html
 
-            # Cài lại composer bằng PHP 8.3
             php8.3 /usr/local/bin/composer install --no-dev --optimize-autoloader
 
             php8.3 artisan config:cache
             php8.3 artisan route:cache
 
-            # Quyền
             chown -R dieupro2iYZ:dieupro2iYZ .
             chmod -R 775 storage
             chmod -R 775 bootstrap/cache
