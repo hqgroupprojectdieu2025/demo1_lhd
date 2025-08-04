@@ -34,6 +34,7 @@ class SignupController extends Controller
                 'password' => Hash::make($data['password']),
                 'verification_token' => Str::random(64),
                 'status' => false, // Tài khoản chưa được kích hoạt
+                'account_type' => 0,
             ]);
 
             \Log::info('User đã được tạo với ID: ' . $user->id);

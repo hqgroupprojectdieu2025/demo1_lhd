@@ -1,5 +1,7 @@
 @extends('layouts.admin')
 
+@section('title', 'Quản lý tài khoản')
+
 @section('content')
 <div class="container">
     <h2 class="mb-4">Danh sách người dùng</h2>
@@ -7,20 +9,20 @@
     {{-- Tìm kiếm và lọc --}}
     <form method="GET" action="{{ route('users.index') }}" class="row g-3 mb-4">
         <div class="col-md-3">
-            <input type="text" name="keyword" class="form-control" placeholder="Tìm theo tên hoặc email" value="{{ request('keyword') }}">
+            <input type="text" name="search" class="form-control" placeholder="Tìm theo tên hoặc email" value="{{ request('keyword') }}">
         </div>
         <div class="col-md-2">
-            <select name="role" class="form-select">
+            <select name="account_type" class="form-select">
                 <option value="">Tất cả vai trò</option>
-                <option value="admin" {{ request('role') === 'admin' ? 'selected' : '' }}>Admin</option>
-                <option value="user" {{ request('role') === 'user' ? 'selected' : '' }}>Khách hàng</option>
+                <option value="0" {{ request('account_type') === '0' ? 'selected' : '' }}>Admin</option>
+                <option value="1" {{ request('account_type') === '1' ? 'selected' : '' }}>Khách hàng</option>
             </select>
         </div>
         <div class="col-md-2">
             <select name="status" class="form-select">
                 <option value="">Tất cả trạng thái</option>
-                <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>Đang hoạt động</option>
-                <option value="blocked" {{ request('status') === 'blocked' ? 'selected' : '' }}>Bị khóa</option>
+                <option value="0" {{ request('status') === '0' ? 'selected' : '' }}>Đang hoạt động</option>
+                <option value="1" {{ request('status') === '1' ? 'selected' : '' }}>Bị khóa</option>
             </select>
         </div>
         <div class="col-md-2">
@@ -47,21 +49,27 @@
                     <td>{{ ($users->currentPage() - 1) * $users->perPage() + $index + 1 }}</td>
                     <td>{{ $user->fullname }}</td>
                     <td>{{ $user->email }}</td>
-                    <td>{{ $user->role === 'admin' ? 'Admin' : 'Khách hàng' }}</td>
+                    <td>{{ $user->account_type == '0' ? 'Admin' : 'Khách hàng' }}</td>
                     <td>
-                        <span class="badge bg-{{ $user->status === '0' ? 'success' : 'secondary' }}">
-                            {{ $user->status === 'active' ? 'Đang hoạt động' : 'Bị khóa' }}
+                        <span class="badge bg-{{ $user->status == 0? 'success' : 'secondary' }}">
+                            {{ $user->status == '0' ? 'Đang hoạt động' : 'Bị khóa' }}
                         </span>
                     </td>
                     <td>{{ $user->created_at->format('d/m/Y') }}</td>
                     <td>
                         <a href="{{ route('users.show', $user->id) }}" class="btn btn-sm btn-info">Xem</a>
-                        <a href="{{ route('users.edit', $user->id) }}" class="btn btn-sm btn-warning">Sửa</a>
                         <form action="{{ route('users.toggleStatus', $user->id) }}" method="POST" class="d-inline">
                             @csrf
-                            <button class="btn btn-sm btn-{{ $user->status === 'active' ? 'danger' : 'success' }}"
-                                    onclick="return confirm('Bạn có chắc chắn muốn {{ $user->status === 'active' ? 'khóa' : 'mở' }} tài khoản này không?')">
-                                {{ $user->status === 'active' ? 'Khóa' : 'Mở' }}
+                            <button class="btn btn-sm btn-{{ $user->status == 0 ? 'danger' : 'success' }}"
+                                    onclick="return confirm('Bạn có chắc chắn muốn {{ $user->status == 0 ? 'khóa' : 'kích hoạt' }} tài khoản {{$user->email}} này không?')">
+                                {{ $user->status == 0 ? 'Khóa' : 'Kích hoạt' }}
+                            </button>
+                        </form>
+                        <form action="{{ route('users.UpdateRole', $user->id) }}" method="POST" class="d-inline">
+                            @csrf
+                            <button class="btn btn-sm btn-{{ $user->status == 0 ? 'danger' : 'success' }}"
+                                    onclick="return confirm('Bạn có chắc chắn muốn đổi tài khoản {{$user->email}} này sang {{ $user->account_type == 1 ? 'admin' : 'khách hàng' }} không?')">
+                                {{ $user->account_type == 1 ? 'Admin' : 'Khách hàng' }}
                             </button>
                         </form>
                     </td>

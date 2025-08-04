@@ -90,7 +90,7 @@ class LoginController extends Controller
             cache()->forget($lockoutKey . '.expires_at');
             $request->session()->regenerate();
             
-            return redirect()->intended('/dashboard')->with('success', 'Đăng nhập thành công!');
+            return redirect()->intended('/users')->with('success', 'Đăng nhập thành công!');
         }
     }
 
@@ -141,7 +141,7 @@ class LoginController extends Controller
         // Xóa session 2FA
         session()->forget(['2fa_user_id', '2fa_email', '2fa_verified', '2fa_temp_code']);
         
-        return redirect()->intended('/dashboard')->with('success', 'Đăng nhập thành công!');
+        return redirect()->intended('/users')->with('success', 'Đăng nhập thành công!');
     }
 
     public function resend2FA()

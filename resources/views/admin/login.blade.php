@@ -14,9 +14,9 @@
                         @csrf
                         <!--begin::Title-->
                         <div class="pb-13 pt-lg-0 pt-5">
-                            <h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg">Welcome to Metronic</h3>
-                            <span class="text-muted font-weight-bold font-size-h4">New Here?
-                            <a href="{{ route('register.form') }}" class="text-primary font-weight-bolder">Create an Account</a></span>
+                            <h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg">Chào mừng bạn!</h3>
+                            <span class="text-muted font-weight-bold font-size-h4">Bạn chưa có tài khoản?
+                            <a href="{{ route('register.form') }}" class="text-primary font-weight-bolder">Đăng ký</a></span>
                         </div>
                         <!--end::Title-->
 
@@ -70,7 +70,7 @@
                         <!--begin::Form group - Password-->
                         <div class="form-group">
                             <div class="d-flex justify-content-between mt-n5">
-                                <label class="font-size-h6 font-weight-bolder text-dark pt-5">Password</label>
+                                <label class="font-size-h6 font-weight-bolder text-dark pt-5">Mật khẩu</label>
                                 <a href="{{ route('password.request') }}" class="text-primary font-size-h6 font-weight-bolder text-hover-primary pt-5">Quên mật khẩu?</a>
                             </div>
                             <input class="form-control form-control-solid h-auto py-7 px-6 rounded-lg @error('password') is-invalid @enderror" 

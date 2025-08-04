@@ -34,8 +34,8 @@ class UserRequest extends FormRequest
             'password' => [$this->isMethod('post') ? 'required' : 'nullable', 'string', 'min:6', 'confirmed'],
             'phone' => ['nullable', 'string', 'max:20'],
             'address' => ['nullable', 'string', 'max:255'],
-            'role' => ['required', Rule::in(['user', 'admin'])],
-            'status' => ['nullable', Rule::in(['active', 'inactive'])],
+            'account_type' => ['required', Rule::in(['1', '0'])],
+            'status' => ['nullable', Rule::in(['0', '1'])],
         ];
     }
 
@@ -49,8 +49,8 @@ class UserRequest extends FormRequest
             'password.required' => 'Vui lòng nhập mật khẩu.',
             'password.min' => 'Mật khẩu phải có ít nhất 6 ký tự.',
             'password.confirmed' => 'Xác nhận mật khẩu không khớp.',
-            'role.required' => 'Vui lòng chọn vai trò.',
-            'role.in' => 'Vai trò không hợp lệ.',
+            'account_type.required' => 'Vui lòng chọn vai trò.',
+            'account_type.in' => 'Vai trò không hợp lệ.',
             'status.in' => 'Trạng thái không hợp lệ.',
         ];
     }
