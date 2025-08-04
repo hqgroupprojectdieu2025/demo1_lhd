@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title', 'Dashboard - Welcome')
+@section('title', 'Welcome')
 
 @section('content')
 <!--begin::Login-->
@@ -14,18 +14,18 @@
             <div class="login-form">
                 <!--begin::Title-->
                 <div class="pb-13 pt-lg-0 pt-5">
-                    <h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg">Dashboard</h3>
-                    <span class="text-muted font-weight-bold font-size-h4">Chào mừng bạn đến với hệ thống quản lý</span>
+                    <h3 class="font-weight-bolder text-dark font-size-h4 font-size-h1-lg">Chào mừng bạn!</h3>
+                    <span class="text-muted font-weight-bold font-size-h4">Hệ thống quản lý tài khoản</span>
                 </div>
                 <!--end::Title-->
 
                 @auth
-                    <!--begin::Welcome Message-->
+                    <!--begin::Dashboard for Logged In Users-->
                     <div class="text-center mb-10">
                         <h2 class="font-weight-bolder text-dark font-size-h2-lg">Xin chào, {{ Auth::user()->fullname }}! 👋</h2>
                         <p class="text-muted font-size-h6">Đây là trang quản lý của bạn</p>
                     </div>
-                    <!--end::Welcome Message-->
+                    
                     @if(session('email_sent'))
                         <div class="alert alert-info alert-dismissible fade show" role="alert">
                             <strong>Email xác thực đã được gửi!</strong> Vui lòng kiểm tra hộp thư đến và thư rác.
@@ -34,13 +34,13 @@
                             </button>
                         </div>
                     @endif
+                    
                     <!--begin::Stats Grid-->
                     <div class="row mb-8">
                         <div class="col-md-6 mb-4">
                             <div class="card card-custom card-stretch">
                                 <div class="card-body p-6">
                                     <div class="d-flex align-items-center">
-                                        
                                         <div class="symbol symbol-50 symbol-light-primary mr-6">
                                             <span class="symbol-label bg-light-primary">
                                                 <i class="fas fa-users text-primary font-size-h4"></i>
@@ -94,6 +94,12 @@
                                 <i class="fas fa-info-circle text-primary mr-2"></i>
                                 Thông tin chi tiết
                             </h3>
+                            <div class="card-toolbar">
+                                <a href="{{ route('profile.edit') }}" class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-edit mr-1"></i>
+                                    Sửa thông tin
+                                </a>
+                            </div>
                         </div>
                         <div class="card-body">
                             <div class="row">
@@ -106,9 +112,21 @@
                                         <span class="text-muted font-weight-bold">Email:</span>
                                         <span class="font-weight-bolder text-dark">{{ Auth::user()->email }}</span>
                                     </div>
+                                    <div class="d-flex justify-content-between py-3 border-bottom">
+                                        <span class="text-muted font-weight-bold">Số điện thoại:</span>
+                                        <span class="font-weight-bolder text-dark">{{ Auth::user()->phone ?? 'Chưa cập nhật' }}</span>
+                                    </div>
                                 </div>
                                 <div class="col-md-6">
                                     <div class="d-flex justify-content-between py-3 border-bottom">
+                                        <span class="text-muted font-weight-bold">Ngày sinh:</span>
+                                        <span class="font-weight-bolder text-dark">{{ Auth::user()->dob ? \Carbon\Carbon::parse(Auth::user()->dob)->format('d/m/Y') : 'Chưa cập nhật' }}</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between py-3 border-bottom">
+                                        <span class="text-muted font-weight-bold">Địa chỉ:</span>
+                                        <span class="font-weight-bolder text-dark">{{ Auth::user()->address ?? 'Chưa cập nhật' }}</span>
+                                    </div>
+                                    <div class="d-flex justify-content-between py-3">
                                         <span class="text-muted font-weight-bold">Trạng thái email:</span>
                                         <span class="font-weight-bolder">
                                             @php
@@ -144,11 +162,6 @@
                                             @endif
                                         </span>
                                     </div>
-
-                                    <div class="d-flex justify-content-between py-3">
-                                        <span class="text-muted font-weight-bold">Ngày tham gia:</span>
-                                        <span class="font-weight-bolder text-dark">{{ Auth::user()->created_at->format('d/m/Y') }}</span>
-                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -157,13 +170,15 @@
                     
                     <!--begin::Action Buttons-->
                     <div class="d-flex flex-wrap justify-content-center">
-                        <form action="{{ route('password.change') }}" method="POST" class="mr-3 mb-3">
-                            @csrf
-                            <button type="submit" class="btn btn-danger btn-lg font-weight-bolder px-8 py-4">
-                                <i class="fas fa-sign-out-alt mr-2"></i>
-                                Đổi mật khẩu
-                            </button>
-                        </form>
+                        <a href="{{ route('password.change.form') }}" class="btn btn-warning btn-lg font-weight-bolder px-8 py-4 mr-3 mb-3">
+                            <i class="fas fa-key mr-2"></i>
+                            Đổi mật khẩu
+                        </a>
+
+                        <a href="{{ route('profile.show') }}" class="btn btn-primary btn-lg font-weight-bolder px-8 py-4 mr-3 mb-3">
+                            <i class="fas fa-user mr-2"></i>
+                            Thông tin cá nhân
+                        </a>
 
                         <form action="{{ route('logout') }}" method="POST" class="mr-3 mb-3">
                             @csrf
@@ -185,7 +200,7 @@
                     <!--begin::Welcome Message for Guests-->
                     <div class="text-center mb-10">
                         <h2 class="font-weight-bolder text-dark font-size-h2-lg">Chào mừng bạn! 👋</h2>
-                        <p class="text-muted font-size-h6">Vui lòng đăng nhập để truy cập hệ thống</p>
+                        <p class="text-muted font-size-h6">Vui lòng đăng nhập hoặc đăng ký để truy cập hệ thống</p>
                     </div>
                     <!--end::Welcome Message for Guests-->
                     
@@ -257,6 +272,5 @@
         }, 1000);
     </script>
 @endif
-
 
 @endsection

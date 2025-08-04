@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class PasswordRequest extends FormRequest
+class ResetPasswordRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -22,17 +22,17 @@ class PasswordRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'current_password' => 'required',
-            'new_password' => [
+            'token' => 'required',
+            'email' => 'required|email',
+            'password' => [
                 'required',
                 'min:8',
                 'regex:/[A-Z]/',       // Ít nhất 1 chữ in hoa
                 'regex:/[a-z]/',       // Ít nhất 1 chữ thường
                 'regex:/[0-9]/',       // Ít nhất 1 số
                 'regex:/[@$!%*?&]/',   // Ít nhất 1 ký tự đặc biệt
-                'different:current_password' // Mật khẩu mới phải khác mật khẩu cũ
             ],
-            'new_password_confirmation' => 'required|same:new_password',
+            'password_confirmation' => 'required|same:password',
         ];
     }
 
@@ -42,7 +42,7 @@ class PasswordRequest extends FormRequest
     public function withValidator($validator)
     {
         $validator->after(function ($validator) {
-            $password = $this->input('new_password');
+            $password = $this->input('password');
             
             if ($password) {
                 $errors = [];
@@ -64,21 +64,23 @@ class PasswordRequest extends FormRequest
                 }
                 
                 foreach ($errors as $error) {
-                    $validator->errors()->add('new_password', $error);
+                    $validator->errors()->add('password', $error);
                 }
             }
         });
     }
 
-    public function messages(){
+    public function messages(): array
+    {
         return [
-            'current_password.required' => 'Mật khẩu hiện tại là trường bắt buộc.',
-            'new_password.required' => 'Mật khẩu mới là trường bắt buộc.',
-            'new_password.min' => 'Mật khẩu phải chứa ít nhất 8 ký tự.',
-            'new_password.regex' => 'Mật khẩu phải bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt.',
-            'new_password.different' => 'Mật khẩu mới phải khác mật khẩu cũ.',
-            'new_password_confirmation.required' => 'Xác nhận mật khẩu là trường bắt buộc.',
-            'new_password_confirmation.same' => 'Xác nhận mật khẩu không khớp.',
+            'token.required' => 'Token không hợp lệ.',
+            'email.required' => 'Email là trường bắt buộc.',
+            'email.email' => 'Email không đúng định dạng.',
+            'password.required' => 'Mật khẩu mới là trường bắt buộc.',
+            'password.min' => 'Mật khẩu phải chứa ít nhất 8 ký tự.',
+            'password.regex' => 'Mật khẩu phải bao gồm chữ hoa, chữ thường, số và ký tự đặc biệt.',
+            'password_confirmation.required' => 'Xác nhận mật khẩu là trường bắt buộc.',
+            'password_confirmation.same' => 'Xác nhận mật khẩu không khớp.',
         ];
     }
-}
+} 

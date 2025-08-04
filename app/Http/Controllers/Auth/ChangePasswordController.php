@@ -17,16 +17,22 @@ class ChangePasswordController extends Controller
 
     public function changePassword(PasswordRequest $request)
     {
-        $data = $request->validate();
         $user = Auth::user();
 
+        // Validate current password
         if (!Hash::check($request->current_password, $user->password)) {
-            return back()->with('error', 'Mật khẩu hiện tại không đúng.');
+            return back()->withErrors(['current_password' => 'Mật khẩu hiện tại không đúng.']);
         }
 
+        // Update password
         $user->password = Hash::make($request->new_password);
         $user->save();
 
-        return back()->with('success', 'Đổi mật khẩu thành công.');
+        // Log out user from all devices except current
+        Auth::logoutOtherDevices($request->new_password);
+
+        // Redirect to login with success message
+        Auth::logout();
+        return redirect()->route('login.form')->with('success', 'Đổi mật khẩu thành công. Vui lòng đăng nhập lại với mật khẩu mới.');
     }
 }

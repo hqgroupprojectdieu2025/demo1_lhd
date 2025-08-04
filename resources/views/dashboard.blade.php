@@ -17,14 +17,14 @@
     
     <style>
         :root {
-            --primary-color: #6366f1;
-            --secondary-color: #8b5cf6;
-            --success-color: #10b981;
-            --warning-color: #f59e0b;
-            --danger-color: #ef4444;
-            --dark-color: #1f2937;
-            --light-color: #f8fafc;
-            --border-color: #e5e7eb;
+            --primary-color: #3699FF;
+            --secondary-color: #E1F0FF;
+            --success-color: #1BC5BD;
+            --warning-color: #FFA800;
+            --danger-color: #F64E60;
+            --dark-color: #181C32;
+            --light-color: #F3F6F9;
+            --border-color: #E4E6EF;
             --sidebar-width: 280px;
         }
         
@@ -306,38 +306,50 @@
         }
         
         .btn-primary {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            background: linear-gradient(135deg, var(--primary-color), #5BB3FF);
             color: white;
-            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+            box-shadow: 0 4px 15px rgba(54, 153, 255, 0.3);
         }
         
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(99, 102, 241, 0.4);
+            box-shadow: 0 8px 25px rgba(54, 153, 255, 0.4);
+            color: white;
+        }
+        
+        .btn-warning {
+            background: linear-gradient(135deg, var(--warning-color), #FFB84D);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 168, 0, 0.3);
+        }
+        
+        .btn-warning:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(255, 168, 0, 0.4);
             color: white;
         }
         
         .btn-danger {
-            background: linear-gradient(135deg, var(--danger-color), #f87171);
+            background: linear-gradient(135deg, var(--danger-color), #FF6B7A);
             color: white;
-            box-shadow: 0 4px 15px rgba(239, 68, 68, 0.3);
+            box-shadow: 0 4px 15px rgba(246, 78, 96, 0.3);
         }
         
         .btn-danger:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(239, 68, 68, 0.4);
+            box-shadow: 0 8px 25px rgba(246, 78, 96, 0.4);
             color: white;
         }
         
         .btn-info {
-            background: linear-gradient(135deg, #06b6d4, #22d3ee);
+            background: linear-gradient(135deg, var(--success-color), #4DD4C8);
             color: white;
-            box-shadow: 0 4px 15px rgba(6, 182, 212, 0.3);
+            box-shadow: 0 4px 15px rgba(27, 197, 189, 0.3);
         }
         
         .btn-info:hover {
             transform: translateY(-2px);
-            box-shadow: 0 8px 25px rgba(6, 182, 212, 0.4);
+            box-shadow: 0 8px 25px rgba(27, 197, 189, 0.4);
             color: white;
         }
         
@@ -352,7 +364,7 @@
         }
         
         .badge-primary {
-            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            background: linear-gradient(135deg, var(--primary-color), #5BB3FF);
             color: white;
         }
         
@@ -362,12 +374,12 @@
         }
         
         .badge-success {
-            background: linear-gradient(135deg, var(--success-color), #34d399);
+            background: linear-gradient(135deg, var(--success-color), #4DD4C8);
             color: white;
         }
         
         .badge-warning {
-            background: linear-gradient(135deg, var(--warning-color), #fbbf24);
+            background: linear-gradient(135deg, var(--warning-color), #FFB84D);
             color: white;
         }
         
@@ -421,11 +433,15 @@
             </a>
             <a href="#users" class="menu-item" data-section="users">
                 <i class="fas fa-users"></i>
-                Quản lý người dùng
+                Quản lý tài khoản
             </a>
             <a href="#security" class="menu-item" data-section="security">
                 <i class="fas fa-shield-alt"></i>
                 Bảo mật
+            </a>
+            <a href="#profile" class="menu-item" data-section="profile">
+                <i class="fas fa-user"></i>
+                Thông tin cá nhân
             </a>
             <a href="#settings" class="menu-item" data-section="settings">
                 <i class="fas fa-cog"></i>
@@ -462,8 +478,10 @@
                         <i class="fas fa-ellipsis-v"></i>
                     </button>
                     <ul class="dropdown-menu">
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-user me-2"></i>Hồ sơ</a></li>
-                        <li><a class="dropdown-item" href="#"><i class="fas fa-cog me-2"></i>Cài đặt</a></li>
+                        <li><a class="dropdown-item" href="{{ route('profile.show') }}"><i class="fas fa-user me-2"></i>Thông tin cá nhân</a></li>
+                        <li><a class="dropdown-item" href="{{ route('profile.edit') }}"><i class="fas fa-edit me-2"></i>Sửa thông tin</a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item" href="{{ route('password.change.form') }}"><i class="fas fa-key me-2"></i>Đổi mật khẩu</a></li>
                         <li><hr class="dropdown-divider"></li>
                         <li>
                             <form action="{{ route('logout') }}" method="POST">
@@ -532,17 +550,17 @@
             </div>
             
             <!-- Users Section -->
-            <div id="users-section" class="section-content" style="display: none;">
-                <div class="dashboard-card">
-                    <div class="card-header">
-                        <h4><i class="fas fa-users me-2"></i>Quản lý người dùng</h4>
-                    </div>
-                    <div class="card-body">
-                        <p>Chức năng quản lý người dùng sẽ được phát triển trong tương lai.</p>
+            <div id="users-section" class="section-content">
+                <div class="dashboard-card card shadow-sm rounded">
+                    <div class="card-body text-center py-5">
+                        <a href="{{ route('users.index') }}" class="btn btn-primary btn-lg">
+                            <i class="fas fa-users me-2"></i>Quản lý tài khoản người dùng
+                        </a>
                     </div>
                 </div>
             </div>
-            
+
+
             <!-- Security Section -->
             <div id="security-section" class="section-content" style="display: none;">
                 <div class="dashboard-card">
@@ -566,12 +584,12 @@
                                 @endif
                             </div>
                             <div class="col-md-6">
-                                <h5>Login Security</h5>
-                                <p>Giám sát và bảo vệ hệ thống đăng nhập.</p>
-                                <button class="btn btn-primary">
-                                    <i class="fas fa-eye"></i>
-                                    Xem logs
-                                </button>
+                                <h5>Đổi mật khẩu</h5>
+                                <p>Thay đổi mật khẩu để tăng cường bảo mật tài khoản.</p>
+                                <a href="{{ route('password.change.form') }}" class="btn btn-warning">
+                                    <i class="fas fa-key"></i>
+                                    Đổi mật khẩu
+                                </a>
                             </div>
                         </div>
                     </div>
@@ -586,6 +604,68 @@
                     </div>
                     <div class="card-body">
                         <p>Chức năng cài đặt hệ thống sẽ được phát triển trong tương lai.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Profile Section -->
+            <div id="profile-section" class="section-content" style="display: none;">
+                <div class="dashboard-card">
+                    <div class="card-header">
+                        <h4><i class="fas fa-user me-2"></i>Thông tin cá nhân</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4 text-center mb-4">
+                                @if(Auth::user()->avatar)
+                                    <img src="{{ Storage::url(Auth::user()->avatar) }}" 
+                                         alt="Avatar" 
+                                         class="rounded-circle mb-3" 
+                                         style="width: 120px; height: 120px; object-fit: cover; border: 4px solid #E4E6EF;">
+                                @else
+                                    <div class="rounded-circle bg-primary d-flex align-items-center justify-content-center mb-3" 
+                                         style="width: 120px; height: 120px; border: 4px solid #E4E6EF;">
+                                        <span class="text-white font-size-h2 font-weight-bold">{{ substr(Auth::user()->fullname, 0, 1) }}</span>
+                                    </div>
+                                @endif
+                                <h5 class="font-weight-bolder">{{ Auth::user()->fullname }}</h5>
+                                <span class="badge badge-primary">
+                                    @if(Auth::user()->account_type == 0)
+                                        <i class="fas fa-crown mr-1"></i>Admin
+                                    @else
+                                        <i class="fas fa-user mr-1"></i>User
+                                    @endif
+                                </span>
+                            </div>
+                            <div class="col-md-8">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="font-weight-bold text-muted">Email:</label>
+                                        <p class="font-weight-bolder text-dark">{{ Auth::user()->email }}</p>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="font-weight-bold text-muted">Số điện thoại:</label>
+                                        <p class="font-weight-bolder text-dark">{{ Auth::user()->phone ?: 'Chưa cập nhật' }}</p>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="font-weight-bold text-muted">Ngày sinh:</label>
+                                        <p class="font-weight-bolder text-dark">{{ Auth::user()->dob ? Auth::user()->dob->format('d/m/Y') : 'Chưa cập nhật' }}</p>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="font-weight-bold text-muted">Ngày tham gia:</label>
+                                        <p class="font-weight-bolder text-dark">{{ Auth::user()->created_at->format('d/m/Y') }}</p>
+                                    </div>
+                                </div>
+                                <div class="mt-4">
+                                    <a href="{{ route('profile.show') }}" class="btn btn-primary mr-3">
+                                        <i class="fas fa-eye mr-2"></i>Xem chi tiết
+                                    </a>
+                                    <a href="{{ route('profile.edit') }}" class="btn btn-warning">
+                                        <i class="fas fa-edit mr-2"></i>Sửa thông tin
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -650,14 +730,14 @@
                 datasets: [{
                     label: 'Đăng nhập thành công',
                     data: [65, 59, 80, 81, 56, 55, 40],
-                    borderColor: '#6366f1',
-                    backgroundColor: 'rgba(99, 102, 241, 0.1)',
+                    borderColor: '#3699FF',
+                    backgroundColor: 'rgba(54, 153, 255, 0.1)',
                     tension: 0.4
                 }, {
                     label: 'Đăng nhập thất bại',
                     data: [28, 48, 40, 19, 86, 27, 90],
-                    borderColor: '#ef4444',
-                    backgroundColor: 'rgba(239, 68, 68, 0.1)',
+                    borderColor: '#F64E60',
+                    backgroundColor: 'rgba(246, 78, 96, 0.1)',
                     tension: 0.4
                 }]
             },
@@ -690,9 +770,9 @@
                         {{ \App\Models\User::whereNull('email_verified_at')->count() }}
                     ],
                     backgroundColor: [
-                        '#6366f1',
-                        '#10b981',
-                        '#f59e0b'
+                        '#3699FF',
+                        '#1BC5BD',
+                        '#FFA800'
                     ],
                     borderWidth: 0
                 }]
