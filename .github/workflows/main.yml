@@ -50,6 +50,7 @@ jobs:
             # Laravel cache
             php8.3 artisan config:cache
             php8.3 artisan route:cache
+            php8.3 artisan view:clear
 
             # Quyền
             chown -R dieupro2iYZ:dieupro2iYZ .
