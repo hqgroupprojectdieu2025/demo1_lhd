@@ -1,17 +1,40 @@
-@extends('dashboard')
+@extends('layouts.admin')
+
+@section('title', 'Thông tin cá nhân')
 
 @section('content')
 <div class="container">
-    <h3>Chi tiết người dùng</h3>
+    <h3>Thông tin cá nhân</h3>
 
-    <ul class="list-group">
-        <li class="list-group-item"><strong>Họ tên:</strong> {{ $user->fullname }}</li>
-        <li class="list-group-item"><strong>Email:</strong> {{ $user->email }}</li>
-        <li class="list-group-item"><strong>Vai trò:</strong> {{ $user->role == 'admin' ? 'Admin' : 'Khách hàng' }}</li>
-        <li class="list-group-item"><strong>Trạng thái:</strong> {{ $user->status ? 'Đang hoạt động' : 'Bị khóa' }}</li>
-        <li class="list-group-item"><strong>Ngày tạo:</strong> {{ $user->created_at->format('d/m/Y H:i') }}</li>
-    </ul>
+    @if (!$user)
+        <div class="alert alert-danger">
+            Không thể tải thông tin người dùng, vui lòng thử lại.
+        </div>
+    @else
+        <div class="card">
+            <div class="card-body">
+                <div class="text-center mb-3">
+                    <img src="{{ $user->avatar ? asset('storage/' . $user->avatar) : asset('images/default-avatar.png') }}" 
+                         alt="Ảnh đại diện" 
+                         class="rounded-circle" 
+                         width="120" height="120">
+                </div>
 
-    <a href="{{ route('users.index') }}" class="btn btn-primary mt-3">Quay lại danh sách</a>
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item"><strong>Họ và tên:</strong> {{ $user->fullname }}</li>
+                    <li class="list-group-item"><strong>Email:</strong> {{ $user->email }}</li>
+                    <li class="list-group-item"><strong>Số điện thoại:</strong> {{ $user->phone ?? 'Chưa cập nhật' }}</li>
+                    <li class="list-group-item"><strong>Ngày sinh:</strong> {{ $user->dob ? \Carbon\Carbon::parse($user->dob)->format('d/m/Y') : 'Chưa cập nhật' }}</li>
+                    <li class="list-group-item"><strong>Địa chỉ:</strong> {{ $user->address ?? 'Chưa cập nhật' }}</li>
+                    <li class="list-group-item"><strong>Vai trò:</strong> {{ $user->account_type == 0 ? 'Admin' : 'Khách hàng' }}</li>
+                    <li class="list-group-item"><strong>Trạng thái:</strong> {{ $user->status == 0 ? 'Đang hoạt động' : 'Bị khóa' }}</li>
+                    <li class="list-group-item"><strong>Ngày tạo:</strong> {{ $user->created_at->format('d/m/Y H:i') }}</li>
+                </ul>
+
+                <a href="{{ route('users.edit', $user->id) }}" class="btn btn-warning mt-3">Sửa thông tin</a>
+                <a href="{{ route('users.index') }}" class="btn btn-secondary mt-3">Quay lại danh sách</a>
+            </div>
+        </div>
+    @endif
 </div>
 @endsection

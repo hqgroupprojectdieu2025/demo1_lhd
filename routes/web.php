@@ -40,12 +40,12 @@ Route::post('/2fa/resend', [LoginController::class, 'resend2FA'])->name('2fa.res
 
 // Protected routes
 Route::middleware(['auth'])->group(function () {
-    Route::get('/dashboard', function () {
+    Route::get('/users', function () {
         if (Auth::user()->account_type == 0) {
-            return view('dashboard');
+            return view('users.index');
         }
         return view('welcome');
-    })->name('dashboard');
+    })->name('users.index');
     
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     // routes/web.php
@@ -65,7 +65,6 @@ Route::middleware(['auth'])->group(function () {
 
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
-    Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
-    Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
-    Route::patch('/users/{id}/toggle-status', [UserController::class, 'toggleStatus'])->name('users.toggleStatus');
+    Route::post('/users/{id}/toggle-status', [UserController::class, 'toggleStatus'])->name('users.toggleStatus');
+    Route::post('/users/{id}/toggle-role', [UserController::class, 'UpdateRole'])->name('users.UpdateRole');
 });
