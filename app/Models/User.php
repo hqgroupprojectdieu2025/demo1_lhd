@@ -27,6 +27,8 @@ class User extends Authenticatable
         'two_fa_secret',
         'recovery_code',
         'status',
+        'password_reset_token',
+        'password_reset_expires_at',
     ];
 
     protected $hidden = [

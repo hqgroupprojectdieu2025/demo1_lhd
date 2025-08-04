@@ -69,8 +69,14 @@
                 </div>
 
                 <div class="form-group d-flex flex-wrap pb-lg-0 pb-3">
-                    <button type="submit" class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-4">Xác nhận thay đổi</button>
-                    <a href="{{ route('dashboard') }}" class="btn btn-light-primary font-weight-bolder font-size-h6 px-8 py-4 my-3">Hủy</a>
+                    <button type="submit" class="btn btn-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-4">
+                        <i class="fas fa-check mr-2"></i>
+                        Xác nhận thay đổi
+                    </button>
+                    <a href="{{ route('dashboard') }}" class="btn btn-light-primary font-weight-bolder font-size-h6 px-8 py-4 my-3">
+                        <i class="fas fa-arrow-left mr-2"></i>
+                        Quay lại Dashboard
+                    </a>
                 </div>
             </form>
             <!--end::Form-->

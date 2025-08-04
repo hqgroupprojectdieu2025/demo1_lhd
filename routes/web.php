@@ -4,13 +4,16 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\SignupController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Auth\ChangePasswordController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
+use App\Http\Controllers\Auth\ProfileController;
 use App\Http\Controllers\Auth\TwoFAController;
+use App\Http\Controllers\Auth\UserController;
 use Illuminate\Support\Facades\Auth;
 
 // Public routes
 Route::get('/', function () {
     return view('welcome');
-})->name('home');
+})->name('welcome');
 
 Route::get('/register', [SignupController::class, 'showRegistrationForm'])->name('register.form');
 Route::post('/register', [SignupController::class, 'register'])->name('register');
@@ -20,6 +23,12 @@ Route::get('/check-verification-status/{id}', [SignupController::class, 'checkVe
 
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login.form');
 Route::post('/login', [LoginController::class, 'login'])->name('login');
+
+// Forgot Password routes
+Route::get('/forgot-password', [ForgotPasswordController::class, 'showForgotForm'])->name('password.request');
+Route::post('/forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])->name('password.email');
+Route::get('/reset-password/{token}', [ForgotPasswordController::class, 'showResetForm'])->name('password.reset');
+Route::post('/reset-password', [ForgotPasswordController::class, 'resetPassword'])->name('password.update');
 
 // Check lockout status
 Route::post('/check-lockout-status', [LoginController::class, 'checkLockoutStatus'])->name('check.lockout.status');
@@ -43,10 +52,20 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/changePassword', [ChangePasswordController::class, 'showChangeForm'])->name('password.change.form');
     Route::post('/changePassword', [ChangePasswordController::class, 'changePassword'])->name('password.change');
 
+    // Profile routes (cần đăng nhập)
+    Route::get('/profile', [ProfileController::class, 'showProfile'])->name('profile.show');
+    Route::get('/profile/edit', [ProfileController::class, 'showEditForm'])->name('profile.edit');
+    Route::put('/profile', [ProfileController::class, 'updateProfile'])->name('profile.update');
     
     // 2FA Setup routes (cần đăng nhập)
     Route::get('/2fa/setup', [TwoFAController::class, 'showSetupForm'])->name('2fa.setup');
     Route::post('/2fa/enable', [TwoFAController::class, 'enable2FA'])->name('2fa.enable');
     Route::post('/2fa/disable', [TwoFAController::class, 'disable2FA'])->name('2fa.disable');
     Route::get('/2fa/regenerate', [TwoFAController::class, 'regenerateSecret'])->name('2fa.regenerate');
+
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
+    Route::get('/users/{id}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::put('/users/{id}', [UserController::class, 'update'])->name('users.update');
+    Route::patch('/users/{id}/toggle-status', [UserController::class, 'toggleStatus'])->name('users.toggleStatus');
 });
