@@ -177,7 +177,7 @@
                         <i class="fas fa-arrow-left mr-2"></i>
                         Quay lại
                     </a>
-                    <a href="{{ route('welcome') }}" class="btn btn-secondary font-weight-bolder font-size-h6 px-8 py-4 my-3">
+                    <a href="/admin" class="btn btn-secondary font-weight-bolder font-size-h6 px-8 py-4 my-3">
 
                         <i class="fas fa-home mr-2"></i>
                         Dashboard
