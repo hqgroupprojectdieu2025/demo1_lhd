@@ -77,6 +77,12 @@
                                 {{ $user->account_type == 1 ? 'Admin' : 'Khách hàng' }}
                             </button>
                         </form>
+                        <form action="{{ route('users.destroy', $user->id) }}" method="POST" onsubmit="return confirm('Bạn có chắc muốn xoá người dùng này?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger btn-sm">Xoá</button>
+                        </form>
+
                     </td>
                 </tr>
             @empty

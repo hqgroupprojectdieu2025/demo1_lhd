@@ -13,6 +13,7 @@ use Illuminate\Support\Facades\URL;
 use Illuminate\Http\Request;
 use App\Mail\VerifyEmail;
 use Illuminate\Support\Facades\Auth;
+use App\Events\UserRegistered;
 
 class SignupController extends Controller
 {
@@ -47,8 +48,9 @@ class SignupController extends Controller
             \Log::info('URL xác thực đã được tạo: ' . $url);
 
             try {
-                // Mail::to($user->email)->send(new VerifyEmail($user, $url));
-                UserRegistered::dispatch($user);
+                Mail::to($user->email)->send(new VerifyEmail($user, $url));
+                // UserRegistered::dispatch($user);
+                // event(new UserRegistered($user));
                 \Log::info('Email đã được gửi thành công đến: ' . $user->email);
                 
                 // Lưu log gửi email
