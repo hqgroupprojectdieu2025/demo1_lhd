@@ -73,7 +73,7 @@
                         <i class="fas fa-check mr-2"></i>
                         Xác nhận thay đổi
                     </button>
-                    <a href="{{ route('dashboard') }}" class="btn btn-light-primary font-weight-bolder font-size-h6 px-8 py-4 my-3">
+                    <a href="/admin" class="btn btn-light-primary font-weight-bolder font-size-h6 px-8 py-4 my-3">
                         <i class="fas fa-arrow-left mr-2"></i>
                         Quay lại Dashboard
                     </a>
