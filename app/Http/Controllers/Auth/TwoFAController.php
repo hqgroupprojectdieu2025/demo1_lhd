@@ -63,7 +63,7 @@ class TwoFAController extends Controller
         $user->two_fa_enable = true;
         $user->save();
 
-        return redirect()->route('dashboard')->with('success', 'Xác thực 2 bước đã được bật thành công!');
+        return redirect()->route('users.index')->with('success', 'Xác thực 2 bước đã được bật thành công!');
     }
 
     public function disable2FA(Request $request)
@@ -90,7 +90,7 @@ class TwoFAController extends Controller
         $user->two_fa_enable = false;
         $user->save();
 
-        return redirect()->route('dashboard')->with('success', 'Xác thực 2 bước đã được tắt thành công!');
+        return redirect()->route('users.index')->with('success', 'Xác thực 2 bước đã được tắt thành công!');
     }
 
     public function regenerateSecret()

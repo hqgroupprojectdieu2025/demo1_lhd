@@ -40,12 +40,18 @@ Route::post('/2fa/resend', [LoginController::class, 'resend2FA'])->name('2fa.res
 
 // Protected routes
 Route::middleware(['auth'])->group(function () {
-    Route::get('/users', function () {
+    Route::get('/admin', function () {
         if (Auth::user()->account_type == 0) {
-            return view('users.index');
+            return view('layouts.admin');
         }
         return view('welcome');
-    })->name('users.index');
+    })->name('layouts.admin');
+    // Route::get('/users', function () {
+    //     if (Auth::user()->account_type == 0) {
+    //         return view('users.index');
+    //     }
+    //     return view('welcome');
+    // })->name('users.index');
     
     Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
     // routes/web.php

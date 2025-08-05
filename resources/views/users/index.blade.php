@@ -4,12 +4,17 @@
 
 @section('content')
 <div class="container">
-    <h2 class="mb-4">Danh sách người dùng</h2>
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">Danh sách người dùng</h2>
+        <a href="{{ route('layouts.admin') }}" class="btn btn-secondary">
+            <i class="fas fa-arrow-left me-2"></i>Quay lại Dashboard
+        </a>
+    </div>
 
     {{-- Tìm kiếm và lọc --}}
     <form method="GET" action="{{ route('users.index') }}" class="row g-3 mb-4">
         <div class="col-md-3">
-            <input type="text" name="search" class="form-control" placeholder="Tìm theo tên hoặc email" value="{{ request('keyword') }}">
+            <input type="text" name="keyword" class="form-control" placeholder="Tìm theo tên hoặc email" value="{{ request('keyword') }}">
         </div>
         <div class="col-md-2">
             <select name="account_type" class="form-select">

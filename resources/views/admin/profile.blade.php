@@ -163,7 +163,8 @@
                     <i class="fas fa-edit mr-2"></i>
                     Sửa thông tin
                 </a>
-                <a href="{{ route('users.index') }}" class="btn btn-light-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-4">
+                <a href="{{ route('welcome') }}" class="btn btn-light-primary font-weight-bolder font-size-h6 px-8 py-4 my-3 mr-4">
+
                     <i class="fas fa-arrow-left mr-2"></i>
                     Quay lại Dashboard
                 </a>

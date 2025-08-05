@@ -45,11 +45,11 @@ class UserController extends Controller
 
 
     // Trang chỉnh sửa người dùng
-    public function edit($id)
-    {
-        $user = User::findOrFail($id);
-        return view('users.edit', compact('user'));
-    }
+    // public function edit($id)
+    // {
+    //     $user = User::findOrFail($id);
+    //     return view('users.edit', compact('user'));
+    // }
 
     // Cập nhật người dùng
     public function update(UserRequest $request, $id)
