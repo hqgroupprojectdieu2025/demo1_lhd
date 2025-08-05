@@ -108,4 +108,19 @@ class UserController extends Controller
         $user = User::findOrFail($id);
         return view('users.show', compact('user'));
     }
+
+    public function destroy($id)
+    {
+        $user = User::findOrFail($id);
+
+        // Xóa ảnh đại diện nếu có
+        if ($user->avatar && \Storage::disk('public')->exists($user->avatar)) {
+            \Storage::disk('public')->delete($user->avatar);
+        }
+
+        // Xóa user
+        $user->delete();
+
+        return redirect()->route('users.index')->with('success', 'Xóa người dùng thành công!');
+    }
 }

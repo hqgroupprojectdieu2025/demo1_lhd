@@ -80,4 +80,6 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/users/{id}', [UserController::class, 'show'])->name('users.show');
     Route::post('/users/{id}/toggle-status', [UserController::class, 'toggleStatus'])->name('users.toggleStatus');
     Route::post('/users/{id}/toggle-role', [UserController::class, 'UpdateRole'])->name('users.UpdateRole');
+    Route::delete('/users/{id}', [UserController::class, 'destroy'])->name('users.destroy');
+
 });
