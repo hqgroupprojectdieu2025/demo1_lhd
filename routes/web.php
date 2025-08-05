@@ -15,6 +15,13 @@ Route::get('/', function () {
     return view('welcome');
 })->name('welcome');
 
+Route::get('/kp', function () {
+    return view('layouts.kp');
+})->name('layout.kp');
+
+Route::get('/security', function() {return view('admin.security');})->name('admin.security');
+
+
 Route::get('/register', [SignupController::class, 'showRegistrationForm'])->name('register.form');
 Route::post('/register', [SignupController::class, 'register'])->name('register');
 Route::post('/resend-verification-email', [SignupController::class, 'resendVerificationEmail'])->name('resend.verification.email');
