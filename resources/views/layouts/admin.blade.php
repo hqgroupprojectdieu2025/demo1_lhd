@@ -478,7 +478,7 @@
                         <i class="fas fa-tachometer-alt"></i>
                         Dashboard
                     </a>
-                    <a href="#users" class="menu-item" data-section="users">
+                    <a href="{{ route('users.index') }}" class="menu-item" data-section="users">
                         <i class="fas fa-users"></i>
                         Quản lý tài khoản
                     </a>
@@ -499,6 +499,10 @@
                 <div id="users-section" class="section-content">
                     <div class="dashboard-card card shadow-sm rounded">
                         <div class="card-body text-center py-5">
+                            <a href="{{ route('users.index') }}" class="btn btn-info">
+                                <i class="fas fa-users"></i>
+                                Quản lý tài khoản
+                            </a>
                             <div class="container mt-2">
                                 @yield('content')
                             </div>

@@ -116,7 +116,7 @@
             <!--end::Content body-->
             <!--begin::Content footer-->
             <div class="d-flex justify-content-lg-start justify-content-center align-items-end py-7 py-lg-0">
-                <a href="{{ route('dashboard') }}" class="text-primary font-weight-bolder font-size-h5">Quay lại Dashboard</a>
+                <a href="{{ route('users.index') }}" class="text-primary font-weight-bolder font-size-h5">Quay lại Dashboard</a>
             </div>
             <!--end::Content footer-->
         </div>
