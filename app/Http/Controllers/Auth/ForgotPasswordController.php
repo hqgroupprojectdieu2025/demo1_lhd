@@ -14,6 +14,8 @@ use Illuminate\Support\Str;
 use Illuminate\Support\Facades\URL;
 use Carbon\Carbon;
 use App\Mail\ResetPassword;
+use App\Events\UserRegistered;
+
 
 class ForgotPasswordController extends Controller
 {
@@ -48,7 +50,8 @@ class ForgotPasswordController extends Controller
 
         // Send email
         try {
-            Mail::to($user->email)->send(new ResetPassword($user, $resetUrl));
+            // Mail::to($user->email)->send(new ResetPassword($user, $resetUrl));
+            event(new UserRegistered($user, $resetUrl));
             
             return back()->with('success', 'Liên kết đặt lại mật khẩu đã được gửi đến email của bạn. Vui lòng kiểm tra hộp thư và thư rác.');
         } catch (\Exception $e) {

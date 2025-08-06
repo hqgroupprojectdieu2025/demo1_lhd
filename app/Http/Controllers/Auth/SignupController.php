@@ -48,10 +48,11 @@ class SignupController extends Controller
             \Log::info('URL xác thực đã được tạo: ' . $url);
 
             try {
-                Mail::to($user->email)->send(new VerifyEmail($user, $url));
+                // Mail::to($user->email)->send(new VerifyEmail($user, $url));
                 // UserRegistered::dispatch($user);
-                // event(new UserRegistered($user));
+                event(new UserRegistered($user, $url));
                 \Log::info('Email đã được gửi thành công đến: ' . $user->email);
+                
                 
                 // Lưu log gửi email
                 EmailSendLog::create([

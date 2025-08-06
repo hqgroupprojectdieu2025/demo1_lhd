@@ -15,12 +15,12 @@ class VerificationEmail extends Mailable
     use Queueable, SerializesModels;
 
     public User $user;
-    public string $verificationUrl;
+    public string $url;
 
-    public function __construct(User $user)
+    public function __construct(User $user, string $url)
     {
         $this->user = $user;
-        $this->verificationUrl = $this->generateVerificationUrl();
+        $this->url = $url;
     }
 
     public function envelope(): Envelope
@@ -33,23 +33,23 @@ class VerificationEmail extends Mailable
     public function content(): Content
     {
         return new Content(
-            view: 'emails.verification',
+            view: 'admin.verify-email',
             with: [
                 'user' => $this->user,
-                'verificationUrl' => $this->verificationUrl,
+                'url' => $this->url,
             ],
         );
     }
 
-    private function generateVerificationUrl(): string
-    {
-        return URL::temporarySignedRoute(
-            'verification.verify',
-            now()->addMinutes(60), // Link hết hạn sau 60 phút
-            [
-                'id' => $this->user->getKey(),
-                'hash' => sha1($this->user->getEmailForVerification()),
-            ]
-        );
-    }
+    // private function generateVerificationUrl(): string
+    // {
+    //     return URL::temporarySignedRoute(
+    //         'verify.email',
+    //         now()->addMinutes(60), // Link hết hạn sau 60 phút
+    //         [
+    //             'id' => $this->user->getKey(),
+    //             'hash' => sha1($this->user->getEmailForVerification()),
+    //         ]
+    //     );
+    // }
 }
