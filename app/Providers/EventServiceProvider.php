@@ -11,12 +11,12 @@ use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvi
 class EventServiceProvider extends ServiceProvider
 {
     protected $listen = [
-        UserRegistered::class => [
-            SendVerificationEmail::class,
-        ],
-        ForgotPassword::class => [
-            SendForgotEmail::class,
-        ],
+        // UserRegistered::class => [
+        //     SendVerificationEmail::class,
+        // ],
+        // ForgotPassword::class => [
+        //     SendForgotEmail::class,
+        // ],
     ];
 
     public function boot(): void
